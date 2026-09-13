@@ -1,0 +1,3078 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <!-- =====================================================
+         BASIC DOCUMENT CONFIGURATION
+    ====================================================== -->
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta
+        name="theme-color"
+        content="#F7FAFC"
+    >
+
+    <meta
+        name="description"
+        content="ArthaVayu — India Airfare Intelligence Platform"
+    >
+
+    <title>
+        ArthaVayu — India Airfare Intelligence
+    </title>
+
+
+    <!-- =====================================================
+         FONTS
+    ====================================================== -->
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+
+    <link
+        rel="preconnect"
+        href="https://fonts.gstatic.com"
+        crossorigin
+    >
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600;700&display=swap"
+        rel="stylesheet"
+    >
+
+
+    <!-- =====================================================
+         ICONS
+    ====================================================== -->
+
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    >
+
+
+    <!-- =====================================================
+         CHART LIBRARY
+    ====================================================== -->
+
+    <script
+        src="https://cdn.jsdelivr.net/npm/echarts@5.5.0/dist/echarts.min.js"
+    ></script>
+
+
+    <!-- =====================================================
+         MAIN CSS
+    ====================================================== -->
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='css/dashboard.css') }}?v=20"
+    >
+
+</head>
+
+
+<body>
+
+
+<!-- =========================================================
+     APPLICATION SHELL
+========================================================== -->
+
+<div
+    id="appShell"
+    class="app-shell"
+>
+
+
+    <!-- =====================================================
+         TOP HEADER
+    ====================================================== -->
+
+    <header
+        id="topHeader"
+        class="top-header"
+    >
+
+        <div class="header-left">
+
+            <!-- BRAND -->
+
+            <a
+                href="#overview"
+                class="brand"
+                aria-label="ArthaVayu home"
+            >
+
+                <div
+                    class="brand-logo"
+                    aria-hidden="true"
+                >
+
+                    <span class="logo-sun"></span>
+
+                    <span class="logo-wing wing-left"></span>
+
+                    <span class="logo-wing wing-right"></span>
+
+                    <span class="logo-air"></span>
+
+                </div>
+
+
+                <div class="brand-text">
+
+                    <strong>
+                        Artha<span>Vayu</span>
+                    </strong>
+
+                    <small>
+                        INDIA AIRFARE INTELLIGENCE
+                    </small>
+
+                </div>
+
+            </a>
+
+        </div>
+
+
+        <!-- HEADER RIGHT -->
+
+        <div class="header-right">
+
+
+            <!-- SYSTEM STATUS -->
+
+            <div
+                class="system-status"
+                id="systemStatus"
+                title="System status"
+            >
+
+                <span class="status-pulse"></span>
+
+                <span
+                    id="systemStatusText"
+                >
+                    CONNECTING
+                </span>
+
+            </div>
+
+
+            <!-- CURRENT DATE -->
+
+            <div
+                class="header-date"
+                id="headerDate"
+            >
+                —
+            </div>
+
+
+            <!-- LANGUAGE -->
+
+            <select
+                id="languageSelect"
+                class="header-select"
+                aria-label="Language"
+            >
+
+                <option value="en">
+                    English
+                </option>
+
+                <option value="hi">
+                    हिन्दी
+                </option>
+
+                <option value="kn">
+                    ಕನ್ನಡ
+                </option>
+
+            </select>
+
+
+            <!-- THEME -->
+
+            <button
+                id="themeToggle"
+                class="header-icon-button"
+                type="button"
+                aria-label="Toggle dark mode"
+                title="Toggle dark mode"
+            >
+
+                <i class="fa-solid fa-moon"></i>
+
+            </button>
+
+
+            <!-- MENU -->
+
+            <button
+                id="mobileMenuButton"
+                class="mobile-menu-button"
+                type="button"
+                aria-label="Open navigation"
+                aria-expanded="false"
+            >
+
+                <i class="fa-solid fa-bars"></i>
+
+            </button>
+
+        </div>
+
+    </header>
+
+
+    <!-- =====================================================
+         MAIN NAVIGATION
+    ====================================================== -->
+
+    <nav
+        id="mainNavigation"
+        class="main-navigation"
+    >
+
+        <div class="nav-inner">
+
+
+            <button
+                type="button"
+                class="nav-link active"
+                data-target="overview"
+            >
+
+                <i class="fa-solid fa-chart-line"></i>
+
+                <span data-i18n="navOverview">
+                    Overview
+                </span>
+
+            </button>
+
+
+            <button
+                type="button"
+                class="nav-link"
+                data-target="market"
+            >
+
+                <i class="fa-solid fa-arrow-trend-up"></i>
+
+                <span data-i18n="navMarket">
+                    Market
+                </span>
+
+            </button>
+
+
+            <button
+                type="button"
+                class="nav-link"
+                data-target="routes"
+            >
+
+                <i class="fa-solid fa-route"></i>
+
+                <span data-i18n="navRoutes">
+                    Routes
+                </span>
+
+            </button>
+
+
+            <button
+                type="button"
+                class="nav-link"
+                data-target="airlines"
+            >
+
+                <i class="fa-solid fa-plane"></i>
+
+                <span data-i18n="navAirlines">
+                    Airlines
+                </span>
+
+            </button>
+
+
+            <button
+                type="button"
+                class="nav-link"
+                data-target="booking"
+            >
+
+                <i class="fa-regular fa-clock"></i>
+
+                <span data-i18n="navBooking">
+                    Booking Window
+                </span>
+
+            </button>
+
+
+            <button
+                type="button"
+                class="nav-link"
+                data-target="airports"
+            >
+
+                <i class="fa-solid fa-building-circle-check"></i>
+
+                <span data-i18n="navAirports">
+                    Airports
+                </span>
+
+            </button>
+
+
+            <button
+                type="button"
+                class="nav-link"
+                data-target="observations"
+            >
+
+                <i class="fa-solid fa-database"></i>
+
+                <span data-i18n="navObservations">
+                    Observations
+                </span>
+
+            </button>
+
+
+            <button
+                type="button"
+                class="nav-link"
+                data-target="governance"
+            >
+
+                <i class="fa-solid fa-shield-halved"></i>
+
+                <span data-i18n="navGovernance">
+                    Governance
+                </span>
+
+            </button>
+
+        </div>
+
+    </nav>
+
+
+    <!-- =====================================================
+         GLOBAL FILTER BAR
+    ====================================================== -->
+
+    <section
+        id="globalFilters"
+        class="global-filter-section"
+        aria-label="Airfare filters"
+    >
+
+        <div class="page-width">
+
+
+            <div class="filter-header">
+
+                <div>
+
+                    <span class="filter-kicker">
+                        ANALYSIS CONTROLS
+                    </span>
+
+                    <h2>
+                        Explore the airfare market
+                    </h2>
+
+                </div>
+
+
+                <button
+                    type="button"
+                    id="resetFilters"
+                    class="reset-button"
+                >
+
+                    <i class="fa-solid fa-rotate-left"></i>
+
+                    <span>
+                        Reset
+                    </span>
+
+                </button>
+
+            </div>
+
+
+            <div class="filter-grid">
+
+
+                <!-- ORIGIN -->
+
+                <div class="filter-control">
+
+                    <label
+                        for="originSelect"
+                    >
+                        From airport
+                    </label>
+
+                    <div class="select-wrapper">
+
+                        <i class="fa-solid fa-plane-departure"></i>
+
+                        <select
+                            id="originSelect"
+                            class="filter-select"
+                        >
+
+                            <option value="ALL">
+                                All airports
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                </div>
+
+
+                <!-- DESTINATION -->
+
+                <div class="filter-control">
+
+                    <label
+                        for="destinationSelect"
+                    >
+                        To airport
+                    </label>
+
+                    <div class="select-wrapper">
+
+                        <i class="fa-solid fa-plane-arrival"></i>
+
+                        <select
+                            id="destinationSelect"
+                            class="filter-select"
+                        >
+
+                            <option value="ALL">
+                                All destinations
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                </div>
+
+
+                <!-- DATE -->
+
+                <div class="filter-control">
+
+                    <label
+                        for="travelDateSelect"
+                    >
+                        Travel date
+                    </label>
+
+                    <div class="select-wrapper">
+
+                        <i class="fa-regular fa-calendar"></i>
+
+                        <select
+                            id="travelDateSelect"
+                            class="filter-select"
+                        >
+
+                            <option value="ALL">
+                                All dates
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                </div>
+
+
+                <!-- BOOKING WINDOW -->
+
+                <div class="filter-control">
+
+                    <label
+                        for="bookingWindowSelect"
+                    >
+                        Booking window
+                    </label>
+
+                    <div class="select-wrapper">
+
+                        <i class="fa-regular fa-clock"></i>
+
+                        <select
+                            id="bookingWindowSelect"
+                            class="filter-select"
+                        >
+
+                            <option value="ALL">
+                                All windows
+                            </option>
+
+                            <option value="60+ days">
+                                60+ days
+                            </option>
+
+                            <option value="31-60 days">
+                                31–60 days
+                            </option>
+
+                            <option value="15-30 days">
+                                15–30 days
+                            </option>
+
+                            <option value="8-14 days">
+                                8–14 days
+                            </option>
+
+                            <option value="4-7 days">
+                                4–7 days
+                            </option>
+
+                            <option value="0-3 days">
+                                0–3 days
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                </div>
+
+
+                <!-- AIRLINE -->
+
+                <div class="filter-control">
+
+                    <label
+                        for="airlineSelect"
+                    >
+                        Airline
+                    </label>
+
+                    <div class="select-wrapper">
+
+                        <i class="fa-solid fa-plane-up"></i>
+
+                        <select
+                            id="airlineSelect"
+                            class="filter-select"
+                        >
+
+                            <option value="ALL">
+                                All airlines
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                </div>
+
+
+                <!-- PERIOD -->
+
+                <div class="filter-control">
+
+                    <label
+                        for="analysisPeriodSelect"
+                    >
+                        Analysis period
+                    </label>
+
+                    <div class="select-wrapper">
+
+                        <i class="fa-solid fa-chart-column"></i>
+
+                        <select
+                            id="analysisPeriodSelect"
+                            class="filter-select"
+                        >
+
+                            <option value="daily">
+                                Daily
+                            </option>
+
+                            <option value="weekly">
+                                Weekly
+                            </option>
+
+                            <option value="monthly">
+                                Monthly
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
+
+            <!-- ACTIVE FILTER STATUS -->
+
+            <div
+                id="activeFilterSummary"
+                class="active-filter-summary"
+            >
+
+                <div class="filter-status-icon">
+                    <i class="fa-solid fa-filter"></i>
+                </div>
+
+                <span
+                    id="activeFilterText"
+                >
+                    Showing the national airfare market
+                </span>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         MAIN CONTENT
+    ====================================================== -->
+
+    <main>
+
+
+        <!-- =================================================
+             OVERVIEW
+        ================================================== -->
+
+        <section
+            id="overview"
+            class="dashboard-section overview-section"
+        >
+
+            <div class="page-width">
+
+
+                <!-- PAGE INTRO -->
+
+                <div class="overview-intro">
+
+                    <div>
+
+                        <span class="section-kicker">
+                            NATIONAL AIRFARE PULSE
+                        </span>
+
+                        <h1>
+                            India's airfare market,
+                            <span>at a glance.</span>
+                        </h1>
+
+                        <p>
+                            Monitor current airfare movement,
+                            route pressure and market signals
+                            through one integrated intelligence view.
+                        </p>
+
+                    </div>
+
+
+                    <div class="overview-date-panel">
+
+                        <span>
+                            OBSERVATION WINDOW
+                        </span>
+
+                        <strong
+                            id="observationWindow"
+                        >
+                            —
+                        </strong>
+
+                        <small
+                            id="observationCountLabel"
+                        >
+                            —
+                        </small>
+
+                    </div>
+
+                </div>
+
+
+                <!-- =================================================
+                     APIx + SIGNAL
+                ================================================== -->
+
+                <div class="hero-intelligence-grid">
+
+
+                    <!-- APIx -->
+
+                    <article
+                        class="apix-card"
+                    >
+
+                        <div class="apix-header">
+
+                            <div>
+
+                                <span>
+                                    APIx
+                                </span>
+
+                                <small>
+                                    AIRFARE PRICE INDEX
+                                </small>
+
+                            </div>
+
+                            <span
+                                id="apixStatusBadge"
+                                class="status-badge"
+                            >
+                                MONITORING
+                            </span>
+
+                        </div>
+
+
+                        <div class="apix-main">
+
+                            <div>
+
+                                <strong
+                                    id="heroApiX"
+                                    class="apix-value"
+                                >
+                                    100.00
+                                </strong>
+
+                                <div
+                                    id="heroApiXChange"
+                                    class="apix-change positive"
+                                >
+                                    ▲ 0.00%
+                                </div>
+
+                            </div>
+
+
+                            <div
+                                class="apix-explanation"
+                            >
+
+                                <span>
+                                    BASE INDEX
+                                </span>
+
+                                <strong>
+                                    100
+                                </strong>
+
+                                <p>
+                                    Measures relative movement
+                                    in observed domestic airfare.
+                                </p>
+
+                            </div>
+
+                        </div>
+
+
+                        <div
+                            id="heroApiChart"
+                            class="apix-chart"
+                        ></div>
+
+
+                        <div class="apix-footer">
+
+                            <div>
+
+                                <span>
+                                    COVERAGE
+                                </span>
+
+                                <strong>
+                                    Domestic
+                                </strong>
+
+                            </div>
+
+                            <div>
+
+                                <span>
+                                    FREQUENCY
+                                </span>
+
+                                <strong>
+                                    Daily
+                                </strong>
+
+                            </div>
+
+                            <div>
+
+                                <span>
+                                    SOURCE
+                                </span>
+
+                                <strong>
+                                    Digital fares
+                                </strong>
+
+                            </div>
+
+                        </div>
+
+                    </article>
+
+
+                    <!-- MARKET SIGNAL -->
+
+                    <article
+                        class="market-signal-card"
+                    >
+
+                        <div class="signal-header">
+
+                            <span>
+                                MARKET SIGNAL
+                            </span>
+
+                            <i
+                                class="fa-solid fa-wave-square"
+                            ></i>
+
+                        </div>
+
+
+                        <div
+                            id="marketSignal"
+                            class="market-signal-value"
+                        >
+                            STABLE
+                        </div>
+
+
+                        <p
+                            id="marketSignalDescription"
+                        >
+                            Current airfare pressure is within
+                            the observed market range.
+                        </p>
+
+
+                        <div
+                            class="signal-meter"
+                        >
+
+                            <span
+                                id="signalMeter"
+                                style="width: 42%;"
+                            ></span>
+
+                        </div>
+
+
+                        <div class="signal-scale">
+
+                            <span>
+                                LOWER
+                            </span>
+
+                            <span>
+                                BASE
+                            </span>
+
+                            <span>
+                                HIGHER
+                            </span>
+
+                        </div>
+
+
+                        <div class="signal-stat-list">
+
+
+                            <div>
+
+                                <span>
+                                    Average fare
+                                </span>
+
+                                <strong
+                                    id="signalAverageFare"
+                                >
+                                    ₹0
+                                </strong>
+
+                            </div>
+
+
+                            <div>
+
+                                <span>
+                                    Highest route
+                                </span>
+
+                                <strong
+                                    id="signalHighestRoute"
+                                >
+                                    —
+                                </strong>
+
+                            </div>
+
+
+                            <div>
+
+                                <span>
+                                    Lowest route
+                                </span>
+
+                                <strong
+                                    id="signalLowestRoute"
+                                >
+                                    —
+                                </strong>
+
+                            </div>
+
+
+                        </div>
+
+                    </article>
+
+                </div>
+
+
+                <!-- =================================================
+                     KPI STRIP
+                ================================================== -->
+
+                <div class="metric-strip">
+
+
+                    <div
+                        class="metric-item"
+                    >
+
+                        <span>
+                            Average fare
+                        </span>
+
+                        <strong
+                            id="kpiAverageFare"
+                        >
+                            ₹0
+                        </strong>
+
+                        <small>
+                            Across observations
+                        </small>
+
+                    </div>
+
+
+                    <div
+                        class="metric-item"
+                    >
+
+                        <span>
+                            Minimum fare
+                        </span>
+
+                        <strong
+                            id="kpiMinimumFare"
+                        >
+                            ₹0
+                        </strong>
+
+                        <small>
+                            Lowest observed
+                        </small>
+
+                    </div>
+
+
+                    <div
+                        class="metric-item"
+                    >
+
+                        <span>
+                            Active routes
+                        </span>
+
+                        <strong
+                            id="kpiRoutes"
+                        >
+                            0
+                        </strong>
+
+                        <small>
+                            Monitored corridors
+                        </small>
+
+                    </div>
+
+
+                    <div
+                        class="metric-item"
+                    >
+
+                        <span>
+                            Airlines
+                        </span>
+
+                        <strong
+                            id="kpiAirlines"
+                        >
+                            0
+                        </strong>
+
+                        <small>
+                            Observed carriers
+                        </small>
+
+                    </div>
+
+
+                    <div
+                        class="metric-item"
+                    >
+
+                        <span>
+                            Observations
+                        </span>
+
+                        <strong
+                            id="kpiObservations"
+                        >
+                            0
+                        </strong>
+
+                        <small>
+                            Processed records
+                        </small>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             MARKET
+        ================================================== -->
+
+        <section
+            id="market"
+            class="dashboard-section market-section"
+        >
+
+            <div class="page-width">
+
+
+                <div class="section-heading">
+
+                    <div>
+
+                        <span class="section-kicker">
+                            PRICE MOVEMENT
+                        </span>
+
+                        <h2>
+                            Track airfare pressure over time.
+                        </h2>
+
+                        <p>
+                            Compare APIx movement with underlying
+                            observed airfare patterns.
+                        </p>
+
+                    </div>
+
+
+                    <div class="chart-action-group">
+
+                        <button
+                            type="button"
+                            id="marketRefresh"
+                            class="outline-button"
+                        >
+
+                            <i class="fa-solid fa-arrows-rotate"></i>
+
+                            Refresh
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+                <div class="market-main-grid">
+
+
+                    <!-- MAIN CHART -->
+
+                    <article
+                        class="chart-card large-market-chart"
+                    >
+
+                        <div class="card-toolbar">
+
+                            <div>
+
+                                <span>
+                                    APIx MOVEMENT
+                                </span>
+
+                                <strong>
+                                    Airfare Price Index
+                                </strong>
+
+                            </div>
+
+
+                            <div
+                                id="trendRangeLabel"
+                                class="chart-info"
+                            >
+                                All observations
+                            </div>
+
+                        </div>
+
+
+                        <div
+                            id="mainTrendChart"
+                            class="main-chart"
+                        ></div>
+
+                    </article>
+
+
+                    <!-- MARKET SUMMARY -->
+
+                    <aside
+                        class="market-summary"
+                    >
+
+                        <div class="summary-heading">
+
+                            <span>
+                                MARKET READOUT
+                            </span>
+
+                            <i
+                                class="fa-solid fa-chart-simple"
+                            ></i>
+
+                        </div>
+
+
+                        <div class="readout-number">
+
+                            <span>
+                                APIx
+                            </span>
+
+                            <strong
+                                id="readoutApiX"
+                            >
+                                100.00
+                            </strong>
+
+                        </div>
+
+
+                        <div
+                            id="marketReadoutText"
+                            class="readout-text"
+                        >
+                            Loading market interpretation...
+                        </div>
+
+
+                        <div class="readout-divider"></div>
+
+
+                        <div class="readout-row">
+
+                            <span>
+                                Direction
+                            </span>
+
+                            <strong
+                                id="marketDirection"
+                            >
+                                —
+                            </strong>
+
+                        </div>
+
+
+                        <div class="readout-row">
+
+                            <span>
+                                Current average
+                            </span>
+
+                            <strong
+                                id="marketAverage"
+                            >
+                                ₹0
+                            </strong>
+
+                        </div>
+
+
+                        <div class="readout-row">
+
+                            <span>
+                                Market range
+                            </span>
+
+                            <strong
+                                id="marketRange"
+                            >
+                                —
+                            </strong>
+
+                        </div>
+
+                    </aside>
+
+                </div>
+
+
+                <!-- SECONDARY MARKET CHARTS -->
+
+                <div class="market-secondary-grid">
+
+
+                    <article class="chart-card">
+
+                        <div class="card-toolbar">
+
+                            <div>
+
+                                <span>
+                                    FARE DISTRIBUTION
+                                </span>
+
+                                <strong>
+                                    Where observations cluster
+                                </strong>
+
+                            </div>
+
+                        </div>
+
+
+                        <div
+                            id="distributionChart"
+                            class="secondary-chart"
+                        ></div>
+
+                    </article>
+
+
+                    <article class="chart-card">
+
+                        <div class="card-toolbar">
+
+                            <div>
+
+                                <span>
+                                    OBSERVATION ACTIVITY
+                                </span>
+
+                                <strong>
+                                    Collection profile
+                                </strong>
+
+                            </div>
+
+                        </div>
+
+
+                        <div
+                            id="activityChart"
+                            class="secondary-chart"
+                        ></div>
+
+                    </article>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             ROUTES
+        ================================================== -->
+
+        <section
+            id="routes"
+            class="dashboard-section routes-section"
+        >
+
+            <div class="page-width">
+
+
+                <div class="section-heading">
+
+                    <div>
+
+                        <span class="section-kicker">
+                            ROUTE INTELLIGENCE
+                        </span>
+
+                        <h2>
+                            Where is airfare pressure concentrated?
+                        </h2>
+
+                        <p>
+                            Explore the highest and lowest observed
+                            fare corridors and open detailed route profiles.
+                        </p>
+
+                    </div>
+
+
+                    <div class="section-stat">
+
+                        <span>
+                            ROUTES
+                        </span>
+
+                        <strong
+                            id="routeSectionCount"
+                        >
+                            0
+                        </strong>
+
+                    </div>
+
+                </div>
+
+
+                <div class="route-workspace">
+
+
+                    <!-- ROUTE LIST -->
+
+                    <article
+                        class="route-list-card"
+                    >
+
+                        <div class="route-list-toolbar">
+
+                            <div>
+
+                                <span>
+                                    MONITORED CORRIDORS
+                                </span>
+
+                                <strong>
+                                    Click a route for details
+                                </strong>
+
+                            </div>
+
+                            <div
+                                class="route-list-count"
+                                id="routeListCount"
+                            >
+                                0 routes
+                            </div>
+
+                        </div>
+
+
+                        <div
+                            id="routeList"
+                            class="route-list"
+                        >
+
+                            <!-- Filled dynamically -->
+
+                            <div class="empty-loading">
+
+                                Loading routes...
+
+                            </div>
+
+                        </div>
+
+                    </article>
+
+
+                    <!-- ROUTE VISUAL -->
+
+                    <article
+                        class="route-network-card"
+                    >
+
+                        <div class="route-network-header">
+
+                            <div>
+
+                                <span>
+                                    NATIONAL ROUTE NETWORK
+                                </span>
+
+                                <strong>
+                                    Relative airfare pressure
+                                </strong>
+
+                            </div>
+
+
+                            <div
+                                class="network-status"
+                            >
+
+                                <span
+                                    class="network-dot"
+                                ></span>
+
+                                Live
+
+                            </div>
+
+                        </div>
+
+
+                        <div
+                            class="india-network"
+                            id="indiaNetwork"
+                        >
+
+                            <!-- Interactive visual -->
+
+                            <div class="india-shape">
+
+                                <div
+                                    class="india-glow"
+                                ></div>
+
+
+                                <button
+                                    class="airport-marker"
+                                    data-airport="DEL"
+                                    style="left:53%;top:18%;"
+                                >
+                                    <span></span>
+                                    DEL
+                                </button>
+
+
+                                <button
+                                    class="airport-marker"
+                                    data-airport="BOM"
+                                    style="left:39%;top:52%;"
+                                >
+                                    <span></span>
+                                    BOM
+                                </button>
+
+
+                                <button
+                                    class="airport-marker"
+                                    data-airport="BLR"
+                                    style="left:49%;top:76%;"
+                                >
+                                    <span></span>
+                                    BLR
+                                </button>
+
+
+                                <button
+                                    class="airport-marker"
+                                    data-airport="HYD"
+                                    style="left:57%;top:59%;"
+                                >
+                                    <span></span>
+                                    HYD
+                                </button>
+
+
+                                <button
+                                    class="airport-marker"
+                                    data-airport="MAA"
+                                    style="left:62%;top:81%;"
+                                >
+                                    <span></span>
+                                    MAA
+                                </button>
+
+
+                                <button
+                                    class="airport-marker"
+                                    data-airport="CCU"
+                                    style="left:78%;top:36%;"
+                                >
+                                    <span></span>
+                                    CCU
+                                </button>
+
+
+                                <span class="route-line route-line-1"></span>
+
+                                <span class="route-line route-line-2"></span>
+
+                                <span class="route-line route-line-3"></span>
+
+                                <span class="route-line route-line-4"></span>
+
+                                <span class="route-line route-line-5"></span>
+
+                            </div>
+
+
+                            <div
+                                class="network-legend"
+                            >
+
+                                <span>
+                                    <i class="legend-normal"></i>
+                                    Normal
+                                </span>
+
+                                <span>
+                                    <i class="legend-medium"></i>
+                                    Moderate
+                                </span>
+
+                                <span>
+                                    <i class="legend-high"></i>
+                                    Elevated
+                                </span>
+
+                            </div>
+
+                        </div>
+
+
+                        <div
+                            id="routeHighlights"
+                            class="route-highlights"
+                        ></div>
+
+                    </article>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             AIRLINES
+        ================================================== -->
+
+        <section
+            id="airlines"
+            class="dashboard-section airlines-section"
+        >
+
+            <div class="page-width">
+
+
+                <div class="section-heading">
+
+                    <div>
+
+                        <span class="section-kicker">
+                            AIRLINE MARKET
+                        </span>
+
+                        <h2>
+                            Compare observed carrier pricing.
+                        </h2>
+
+                        <p>
+                            Understand fare levels and observation
+                            coverage across airlines.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="airline-grid">
+
+
+                    <article class="chart-card">
+
+                        <div class="card-toolbar">
+
+                            <div>
+
+                                <span>
+                                    CARRIER COMPARISON
+                                </span>
+
+                                <strong>
+                                    Average observed fare
+                                </strong>
+
+                            </div>
+
+                        </div>
+
+
+                        <div
+                            id="airlineChart"
+                            class="airline-chart"
+                        ></div>
+
+                    </article>
+
+
+                    <article
+                        class="airline-ranking-card"
+                    >
+
+                        <div class="card-toolbar">
+
+                            <div>
+
+                                <span>
+                                    AIRLINE COVERAGE
+                                </span>
+
+                                <strong>
+                                    Observation volume
+                                </strong>
+
+                            </div>
+
+                        </div>
+
+
+                        <div
+                            id="airlineBars"
+                            class="airline-bars"
+                        >
+
+                            <div class="empty-loading">
+                                Loading airlines...
+                            </div>
+
+                        </div>
+
+                    </article>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             BOOKING WINDOW
+        ================================================== -->
+
+        <section
+            id="booking"
+            class="dashboard-section booking-section"
+        >
+
+            <div class="page-width">
+
+
+                <div class="section-heading">
+
+                    <div>
+
+                        <span class="section-kicker">
+                            BOOKING WINDOW
+                        </span>
+
+                        <h2>
+                            How travel proximity affects fare.
+                        </h2>
+
+                        <p>
+                            Compare observed airfare across advance
+                            purchase windows.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="booking-layout">
+
+
+                    <article
+                        class="booking-main-card"
+                    >
+
+                        <div class="card-toolbar">
+
+                            <div>
+
+                                <span>
+                                    LEAD-TIME EFFECT
+                                </span>
+
+                                <strong>
+                                    Average fare by booking window
+                                </strong>
+
+                            </div>
+
+                        </div>
+
+
+                        <div
+                            id="bookingChart"
+                            class="booking-chart"
+                        ></div>
+
+                    </article>
+
+
+                    <aside
+                        class="booking-insight-card"
+                    >
+
+                        <span>
+                            BOOKING SIGNAL
+                        </span>
+
+
+                        <strong
+                            id="bookingInsightValue"
+                        >
+                            —
+                        </strong>
+
+
+                        <p
+                            id="bookingInsightText"
+                        >
+                            Waiting for booking-window data.
+                        </p>
+
+
+                        <div class="booking-comparison">
+
+                            <div>
+
+                                <span>
+                                    EARLIEST
+                                </span>
+
+                                <strong
+                                    id="earlyFare"
+                                >
+                                    ₹0
+                                </strong>
+
+                            </div>
+
+
+                            <div class="comparison-arrow">
+
+                                <i
+                                    class="fa-solid fa-arrow-right"
+                                ></i>
+
+                            </div>
+
+
+                            <div>
+
+                                <span>
+                                    CLOSE-IN
+                                </span>
+
+                                <strong
+                                    id="lateFare"
+                                >
+                                    ₹0
+                                </strong>
+
+                            </div>
+
+                        </div>
+
+                    </aside>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             AIRPORTS / DESTINATIONS
+        ================================================== -->
+
+        <section
+            id="airports"
+            class="dashboard-section airports-section"
+        >
+
+            <div class="page-width">
+
+
+                <div class="section-heading">
+
+                    <div>
+
+                        <span class="section-kicker">
+                            AIRPORT & DESTINATION DIRECTORY
+                        </span>
+
+                        <h2>
+                            Complete airport and destination view.
+                        </h2>
+
+                        <p>
+                            Search and inspect every airport and
+                            destination represented in the airfare dataset.
+                        </p>
+
+                    </div>
+
+
+                    <div class="directory-tools">
+
+                        <div
+                            class="table-search"
+                        >
+
+                            <i
+                                class="fa-solid fa-magnifying-glass"
+                            ></i>
+
+                            <input
+                                id="airportSearch"
+                                type="search"
+                                placeholder="Search airport, city or code..."
+                                autocomplete="off"
+                            >
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- AIRPORT SUMMARY -->
+
+                <div class="directory-summary">
+
+
+                    <div>
+
+                        <span>
+                            AIRPORTS
+                        </span>
+
+                        <strong
+                            id="airportCount"
+                        >
+                            0
+                        </strong>
+
+                    </div>
+
+
+                    <div>
+
+                        <span>
+                            ORIGINS
+                        </span>
+
+                        <strong
+                            id="originCount"
+                        >
+                            0
+                        </strong>
+
+                    </div>
+
+
+                    <div>
+
+                        <span>
+                            DESTINATIONS
+                        </span>
+
+                        <strong
+                            id="destinationCount"
+                        >
+                            0
+                        </strong>
+
+                    </div>
+
+
+                    <div>
+
+                        <span>
+                            CONNECTED ROUTES
+                        </span>
+
+                        <strong
+                            id="connectedRouteCount"
+                        >
+                            0
+                        </strong>
+
+                    </div>
+
+                </div>
+
+
+                <!-- AIRPORT TABLE -->
+
+                <article
+                    class="data-table-card"
+                >
+
+                    <div class="table-header-row">
+
+                        <div>
+
+                            <span>
+                                AIRPORT DIRECTORY
+                            </span>
+
+                            <strong>
+                                Interactive reference table
+                            </strong>
+
+                        </div>
+
+
+                        <div class="table-pagination-info">
+
+                            <span
+                                id="airportPaginationInfo"
+                            >
+                                0 records
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="table-scroll">
+
+                        <table
+                            class="data-table"
+                            id="airportTable"
+                        >
+
+                            <thead>
+
+                                <tr>
+
+                                    <th>
+                                        #
+                                    </th>
+
+                                    <th>
+                                        Airport
+                                    </th>
+
+                                    <th>
+                                        City
+                                    </th>
+
+                                    <th>
+                                        IATA
+                                    </th>
+
+                                    <th>
+                                        Origin routes
+                                    </th>
+
+                                    <th>
+                                        Destination routes
+                                    </th>
+
+                                    <th>
+                                        Avg fare
+                                    </th>
+
+                                    <th>
+                                        Status
+                                    </th>
+
+                                </tr>
+
+                            </thead>
+
+
+                            <tbody
+                                id="airportTableBody"
+                            >
+
+                                <tr>
+
+                                    <td
+                                        colspan="8"
+                                        class="table-loading"
+                                    >
+                                        Loading airport data...
+                                    </td>
+
+                                </tr>
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+
+                    <div class="pagination">
+
+                        <button
+                            type="button"
+                            id="airportPrevious"
+                            class="pagination-button"
+                            disabled
+                        >
+
+                            <i class="fa-solid fa-chevron-left"></i>
+
+                        </button>
+
+
+                        <span
+                            id="airportPageNumber"
+                        >
+                            1
+                        </span>
+
+
+                        <button
+                            type="button"
+                            id="airportNext"
+                            class="pagination-button"
+                            disabled
+                        >
+
+                            <i class="fa-solid fa-chevron-right"></i>
+
+                        </button>
+
+                    </div>
+
+                </article>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             FARE OBSERVATIONS
+        ================================================== -->
+
+        <section
+            id="observations"
+            class="dashboard-section observations-section"
+        >
+
+            <div class="page-width">
+
+
+                <div class="section-heading">
+
+                    <div>
+
+                        <span class="section-kicker">
+                            FARE OBSERVATIONS
+                        </span>
+
+                        <h2>
+                            Underlying airfare observations.
+                        </h2>
+
+                        <p>
+                            Inspect the cleaned observations feeding
+                            the analytical layer.
+                        </p>
+
+                    </div>
+
+
+                    <div class="observation-tools">
+
+
+                        <div class="table-filter">
+
+                            <label>
+                                Route
+                            </label>
+
+                            <select
+                                id="observationRouteSelect"
+                            >
+
+                                <option value="ALL">
+                                    All routes
+                                </option>
+
+                            </select>
+
+                        </div>
+
+
+                        <div class="table-filter">
+
+                            <label>
+                                Airline
+                            </label>
+
+                            <select
+                                id="observationAirlineSelect"
+                            >
+
+                                <option value="ALL">
+                                    All airlines
+                                </option>
+
+                            </select>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <article
+                    class="data-table-card"
+                >
+
+                    <div class="table-header-row">
+
+                        <div>
+
+                            <span>
+                                PROCESSED OBSERVATIONS
+                            </span>
+
+                            <strong>
+                                Clean analytical records
+                            </strong>
+
+                        </div>
+
+
+                        <div>
+
+                            <span
+                                id="observationPaginationInfo"
+                            >
+                                0 records
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="table-scroll">
+
+                        <table
+                            class="data-table observations-table"
+                        >
+
+                            <thead>
+
+                                <tr>
+
+                                    <th>
+                                        Collection
+                                    </th>
+
+                                    <th>
+                                        Route
+                                    </th>
+
+                                    <th>
+                                        Airline
+                                    </th>
+
+                                    <th>
+                                        Travel date
+                                    </th>
+
+                                    <th>
+                                        Booking window
+                                    </th>
+
+                                    <th>
+                                        Fare
+                                    </th>
+
+                                    <th>
+                                        Stops
+                                    </th>
+
+                                    <th>
+                                        Outlier
+                                    </th>
+
+                                </tr>
+
+                            </thead>
+
+
+                            <tbody
+                                id="observationTableBody"
+                            >
+
+                                <tr>
+
+                                    <td
+                                        colspan="8"
+                                        class="table-loading"
+                                    >
+                                        Loading observations...
+                                    </td>
+
+                                </tr>
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+
+                    <div class="pagination">
+
+                        <button
+                            type="button"
+                            id="observationPrevious"
+                            class="pagination-button"
+                            disabled
+                        >
+
+                            <i class="fa-solid fa-chevron-left"></i>
+
+                        </button>
+
+
+                        <span
+                            id="observationPageNumber"
+                        >
+                            1
+                        </span>
+
+
+                        <button
+                            type="button"
+                            id="observationNext"
+                            class="pagination-button"
+                            disabled
+                        >
+
+                            <i class="fa-solid fa-chevron-right"></i>
+
+                        </button>
+
+                    </div>
+
+                </article>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             GOVERNANCE
+        ================================================== -->
+
+        <section
+            id="governance"
+            class="dashboard-section governance-section"
+        >
+
+            <div class="page-width">
+
+
+                <div class="section-heading">
+
+                    <div>
+
+                        <span class="section-kicker">
+                            DATA GOVERNANCE
+                        </span>
+
+                        <h2>
+                            Know what is behind the numbers.
+                        </h2>
+
+                        <p>
+                            Data quality indicators and methodology
+                            status for the current analytical dataset.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <!-- QUALITY METRICS -->
+
+                <div class="quality-grid">
+
+
+                    <article class="quality-card">
+
+                        <div class="quality-icon">
+                            <i class="fa-solid fa-database"></i>
+                        </div>
+
+                        <span>
+                            PROCESSED RECORDS
+                        </span>
+
+                        <strong
+                            id="qualityRecords"
+                        >
+                            0
+                        </strong>
+
+                    </article>
+
+
+                    <article class="quality-card">
+
+                        <div class="quality-icon">
+                            <i class="fa-solid fa-copy"></i>
+                        </div>
+
+                        <span>
+                            DUPLICATES
+                        </span>
+
+                        <strong
+                            id="qualityDuplicates"
+                        >
+                            0
+                        </strong>
+
+                    </article>
+
+
+                    <article class="quality-card">
+
+                        <div class="quality-icon">
+                            <i class="fa-solid fa-triangle-exclamation"></i>
+                        </div>
+
+                        <span>
+                            FLAGGED OUTLIERS
+                        </span>
+
+                        <strong
+                            id="qualityOutliers"
+                        >
+                            0
+                        </strong>
+
+                    </article>
+
+
+                    <article class="quality-card">
+
+                        <div class="quality-icon">
+                            <i class="fa-solid fa-circle-check"></i>
+                        </div>
+
+                        <span>
+                            COMPLETENESS
+                        </span>
+
+                        <strong
+                            id="qualityCompleteness"
+                        >
+                            0%
+                        </strong>
+
+                    </article>
+
+                </div>
+
+
+                <!-- GOVERNANCE CARDS -->
+
+                <div class="governance-grid">
+
+
+                    <article class="governance-card">
+
+                        <div class="governance-number">
+                            01
+                        </div>
+
+                        <div>
+
+                            <span>
+                                COLLECTION
+                            </span>
+
+                            <h3>
+                                Automated acquisition
+                            </h3>
+
+                            <p>
+                                Digital airfare observations are
+                                collected through the configured
+                                acquisition pipeline.
+                            </p>
+
+                        </div>
+
+                    </article>
+
+
+                    <article class="governance-card">
+
+                        <div class="governance-number">
+                            02
+                        </div>
+
+                        <div>
+
+                            <span>
+                                STANDARDIZATION
+                            </span>
+
+                            <h3>
+                                Unified observations
+                            </h3>
+
+                            <p>
+                                Routes, dates, fares, airlines,
+                                stops and booking windows are
+                                normalized before analysis.
+                            </p>
+
+                        </div>
+
+                    </article>
+
+
+                    <article class="governance-card">
+
+                        <div class="governance-number">
+                            03
+                        </div>
+
+                        <div>
+
+                            <span>
+                                QUALITY
+                            </span>
+
+                            <h3>
+                                Controlled data
+                            </h3>
+
+                            <p>
+                                Duplicates are controlled and
+                                potential fare outliers are
+                                explicitly flagged.
+                            </p>
+
+                        </div>
+
+                    </article>
+
+
+                    <article class="governance-card">
+
+                        <div class="governance-number">
+                            04
+                        </div>
+
+                        <div>
+
+                            <span>
+                                ANALYTICS
+                            </span>
+
+                            <h3>
+                                Index intelligence
+                            </h3>
+
+                            <p>
+                                Processed observations feed route,
+                                airline, booking-window and APIx
+                                analysis.
+                            </p>
+
+                        </div>
+
+                    </article>
+
+                </div>
+
+
+                <!-- VALIDATION -->
+
+                <article
+                    class="validation-panel"
+                >
+
+                    <div class="validation-header">
+
+                        <div>
+
+                            <span>
+                                INDEX VALIDATION
+                            </span>
+
+                            <h3>
+                                APIx back-testing readiness
+                            </h3>
+
+                        </div>
+
+
+                        <span
+                            id="validationStatus"
+                            class="validation-badge"
+                        >
+                            AWAITING HISTORY
+                        </span>
+
+                    </div>
+
+
+                    <div class="validation-grid">
+
+
+                        <div>
+
+                            <span>
+                                MAPE
+                            </span>
+
+                            <strong
+                                id="validationMape"
+                            >
+                                —
+                            </strong>
+
+                        </div>
+
+
+                        <div>
+
+                            <span>
+                                RMSE
+                            </span>
+
+                            <strong
+                                id="validationRmse"
+                            >
+                                —
+                            </strong>
+
+                        </div>
+
+
+                        <div>
+
+                            <span>
+                                CORRELATION
+                            </span>
+
+                            <strong
+                                id="validationCorrelation"
+                            >
+                                —
+                            </strong>
+
+                        </div>
+
+
+                        <div>
+
+                            <span>
+                                DIRECTIONAL ACCURACY
+                            </span>
+
+                            <strong
+                                id="validationDirectional"
+                            >
+                                —
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+
+                    <p
+                        id="validationNote"
+                        class="validation-note"
+                    >
+                        Historical observations are required before
+                        meaningful back-testing results can be reported.
+                    </p>
+
+                </article>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- =====================================================
+         ROUTE DETAIL DRAWER
+    ====================================================== -->
+
+    <aside
+        id="routeDrawer"
+        class="route-drawer"
+        aria-hidden="true"
+    >
+
+        <div class="drawer-overlay"></div>
+
+
+        <div class="drawer-panel">
+
+            <div class="drawer-header">
+
+                <div>
+
+                    <span>
+                        ROUTE PROFILE
+                    </span>
+
+                    <h2
+                        id="drawerRoute"
+                    >
+                        DEL → BOM
+                    </h2>
+
+                </div>
+
+
+                <button
+                    type="button"
+                    id="closeRouteDrawer"
+                    class="drawer-close"
+                    aria-label="Close route details"
+                >
+
+                    <i class="fa-solid fa-xmark"></i>
+
+                </button>
+
+            </div>
+
+
+            <div class="drawer-content">
+
+
+                <div class="drawer-main-metric">
+
+                    <span>
+                        AVERAGE OBSERVED FARE
+                    </span>
+
+                    <strong
+                        id="drawerAverageFare"
+                    >
+                        ₹0
+                    </strong>
+
+                    <small
+                        id="drawerRouteStatus"
+                    >
+                        —
+                    </small>
+
+                </div>
+
+
+                <div class="drawer-stat-grid">
+
+
+                    <div>
+
+                        <span>
+                            MINIMUM
+                        </span>
+
+                        <strong
+                            id="drawerMinimum"
+                        >
+                            ₹0
+                        </strong>
+
+                    </div>
+
+
+                    <div>
+
+                        <span>
+                            MAXIMUM
+                        </span>
+
+                        <strong
+                            id="drawerMaximum"
+                        >
+                            ₹0
+                        </strong>
+
+                    </div>
+
+
+                    <div>
+
+                        <span>
+                            VOLATILITY
+                        </span>
+
+                        <strong
+                            id="drawerVolatility"
+                        >
+                            0%
+                        </strong>
+
+                    </div>
+
+
+                    <div>
+
+                        <span>
+                            OBSERVATIONS
+                        </span>
+
+                        <strong
+                            id="drawerObservations"
+                        >
+                            0
+                        </strong>
+
+                    </div>
+
+                </div>
+
+
+                <div class="drawer-section">
+
+                    <span>
+                        AIRLINE COVERAGE
+                    </span>
+
+                    <strong
+                        id="drawerAirlines"
+                    >
+                        0 airlines
+                    </strong>
+
+                </div>
+
+
+                <div class="drawer-section drawer-highlight">
+
+                    <span>
+                        SYSTEM INTERPRETATION
+                    </span>
+
+                    <p
+                        id="drawerInsight"
+                    >
+                        —
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </aside>
+
+
+    <!-- =====================================================
+         AIRPORT DETAIL MODAL
+    ====================================================== -->
+
+    <div
+        id="airportModal"
+        class="modal-overlay"
+        aria-hidden="true"
+    >
+
+        <div class="airport-modal">
+
+            <button
+                type="button"
+                id="closeAirportModal"
+                class="modal-close"
+                aria-label="Close airport details"
+            >
+
+                <i class="fa-solid fa-xmark"></i>
+
+            </button>
+
+
+            <div class="modal-kicker">
+                AIRPORT PROFILE
+            </div>
+
+
+            <h2
+                id="modalAirportName"
+            >
+                Delhi
+            </h2>
+
+
+            <div
+                id="modalAirportCode"
+                class="modal-code"
+            >
+                DEL
+            </div>
+
+
+            <div class="airport-modal-grid">
+
+
+                <div>
+
+                    <span>
+                        ORIGIN ROUTES
+                    </span>
+
+                    <strong
+                        id="modalOriginRoutes"
+                    >
+                        0
+                    </strong>
+
+                </div>
+
+
+                <div>
+
+                    <span>
+                        DESTINATION ROUTES
+                    </span>
+
+                    <strong
+                        id="modalDestinationRoutes"
+                    >
+                        0
+                    </strong>
+
+                </div>
+
+
+                <div>
+
+                    <span>
+                        AVG FARE
+                    </span>
+
+                    <strong
+                        id="modalAirportFare"
+                    >
+                        ₹0
+                    </strong>
+
+                </div>
+
+
+                <div>
+
+                    <span>
+                        STATUS
+                    </span>
+
+                    <strong>
+                        ACTIVE
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <div class="modal-note">
+
+                Connected route information is derived from
+                the current processed airfare dataset.
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- =====================================================
+         TOAST
+    ====================================================== -->
+
+    <div
+        id="toastContainer"
+        class="toast-container"
+        aria-live="polite"
+    ></div>
+
+
+    <!-- =====================================================
+         FOOTER
+    ====================================================== -->
+
+    <footer class="site-footer">
+
+        <div class="page-width footer-top">
+
+
+            <div class="footer-brand-block">
+
+                <div class="footer-brand">
+                    Artha<span>Vayu</span>
+                </div>
+
+                <p>
+                    India Airfare Intelligence Platform
+                </p>
+
+            </div>
+
+
+            <div class="footer-links">
+
+                <a href="#overview">
+                    Overview
+                </a>
+
+                <a href="#routes">
+                    Routes
+                </a>
+
+                <a href="#airports">
+                    Airports
+                </a>
+
+                <a href="#governance">
+                    Data Governance
+                </a>
+
+            </div>
+
+
+            <div class="footer-system">
+
+                <span>
+                    SYSTEM STATUS
+                </span>
+
+                <strong
+                    id="footerStatus"
+                >
+                    CONNECTING
+                </strong>
+
+                <small
+                    id="footerObservationCount"
+                >
+                    0 observations
+                </small>
+
+            </div>
+
+        </div>
+
+
+        <div class="page-width footer-bottom">
+
+            <span>
+                ArthaVayu • India Airfare Intelligence
+            </span>
+
+            <span>
+                Smart India Hackathon Prototype
+            </span>
+
+        </div>
+
+    </footer>
+
+
+</div>
+
+
+<!-- =========================================================
+     JAVASCRIPT
+========================================================== -->
+
+<script
+    src="{{ url_for('static', filename='js/dashboard.js') }}?v=20"
+></script>
+
+
+</body>
+</html>

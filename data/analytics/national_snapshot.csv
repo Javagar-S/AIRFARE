@@ -1,0 +1,2 @@
+generated_at,api_x,api_x_change_pct,average_fare,minimum_fare,maximum_fare,routes,airlines,observations,travel_dates,highest_average_fare_route,lowest_average_fare_route
+2026-09-13 07:01:57.018996+00:00,77.11,-22.89,18795.30518394649,7066.0,281760.0,87,10,1196,2,COK-MAA,BLR-MAA

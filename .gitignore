@@ -1,0 +1,8 @@
+@"
+AWS/
+__pycache__/
+*.pyc
+.env
+.idea/
+.vscode/
+"@ | Set-Content .gitignore

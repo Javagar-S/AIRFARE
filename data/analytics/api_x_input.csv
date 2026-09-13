@@ -1,0 +1,2 @@
+outbound_date,route,current_average_fare,current_median_fare,minimum_fare,maximum_fare,fare_std,sample_size,airlines,fare_volatility_pct
+2026-09-13,DEL-BOM,6491.125,6425.0,6314.0,6880.0,176.71238739019643,8,4,2.722369194711185
